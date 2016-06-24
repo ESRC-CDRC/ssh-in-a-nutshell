@@ -1,0 +1,334 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>reveal.js</title>
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+    <style type="text/css" media="screen">
+.reveal code {
+  border: 1px solid #444444;
+  background-color: #444444;
+  padding: 7px 7px;
+  border-radius: 10px;
+}
+    </style>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section data-markdown>
+          <script type="text/template" charset="utf-8">
+# (S)ecure (Sh)ell
+
+### Accessing Remote Computational Resource
+
+By [Wen Li](https://github.com/spacelis)
+          </script>
+				</section>
+        <section>
+          <section data-markdown>
+            <script type="text/template" charset="utf-8">
+              
+## Remote Access to Servers
+
+![Server-client](/images/servers.jpg)
+
+<aside class="notes">
+  Servers provide more central way of managing resources, e.g., computation, storage.
+</aside>
+            </script>
+          </section>
+
+          <section data-markdown>
+            <script type="text/template" charset="utf-8">
+## GUI Tools
+
+
+- Microsoft Windows Remote Desktop
+- VNC
+- Chrome Remote Desktop
+- TeamViewer
+
+
+<aside class="notes">
+  These are popular remote accessing softwares and they are all GUI based.
+</aside>
+            </script>
+          </section>
+          <section data-markdown>
+            <script type="text/template" charset="utf-8">
+              
+## Welcome to The World of Termin~~ator~~als
+
+Why SSH?
+- Default on almost every *NIX based systems
+- Light-weighted (text-based UI/CUI)
+- Low requirement on network bandwidth
+- Time-proved secure
+
+            </script>
+          </section>
+          <section data-markdown>
+            <script type="text/template" charset="utf-8">
+              
+## Tools for SSH
+
+- ssh - defualt most *NIX like systems (Linux/Mac OS)
+- [PuTTY](http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html) - Straight forward on Windows
+- [Cygwin](https://www.cygwin.com) - A larger collection of tools ported from *NIX like systems
+
+<aside class="notes">
+  PuTTY is the most straight forward for logging into a SSH service.
+  The latter one (Cygwin) is a bunch of commandline tools mimic-ing *NIX based system, with which you can do a lot things including SSH-ing to a server.
+</aside>
+
+            </script>
+          </section>
+        </section>
+        <section>
+          <section data-markdown>
+            <script type="text/template" charset="utf-8">
+            ## Get started!
+
+            ```ssh [username@]<host>```
+              
+            </script>
+          </section>
+          <section data-markdown>
+            <script type="text/template" charset="utf-8">
+## That's it.
+### Thanks!
+              
+            </script>
+          </section>
+        </section>
+        <section>
+          
+          <section data-markdown>
+            <script type="text/template" charset="utf-8">
+            
+## When you ssh-ed to a server...
+
+You will see ```<username>@<host>:~$```
+
+- This is called *prompt*, indicating that the system is waiting for your orders
+- It shows basic information about the current environment, your login, the host, and current directory
+
+
+<aside class="notes">
+  The tilde symbol (~) means your home directory, which is usually located at /home/username.
+  But this may vary on different systems and you may check it by 'pwd'.
+</aside>
+            </script>
+          </section>
+          <section data-markdown>
+            <script type="text/template" charset="utf-8">
+            
+## When you ssh-ed to a server...
+
+Basic format of command
+
+```<command> [parameter1 [parameter2] ... ]```
+
+- Change current directory
+
+  ```cd another/directory```
+
+- List current directory
+
+  ```ls an/directory``` or simply ```ls```
+
+<aside class="notes">
+  Please notice that there are two way of interpreting a path to a directory.
+  Relative path (that starting with no slash(/)) means a path starting from your current directory.
+  At any moment you are sitting in a directory called "current working directy", you may find it in the prompt.
+  Absolute path (that strating with a slash(/)) means a path starting for the system root and there is only one root for each system.
+  Any file can be find by the two formats of path and the only difference is the number of keys you need to press.
+</aside>
+            </script>
+          </section>
+          <section data-markdown>
+            <script type="text/template" charset="utf-8">
+            
+## A bit more...
+
+-  Copy file
+
+  ```cp path/to/source path/to/target```
+  
+- Move file
+
+  ```mv path/to/source path/to/target``` 
+
+<aside class="notes">
+  You may use mv for renaming a file.
+  Please notice, these command is running only on the server and cannot copy/move files across networks.
+  The topic will be visited shortly.
+</aside>
+            </script>
+          </section>
+          <section data-markdown>
+            <script type="text/javascript" charset="utf-8">
+            
+## Starting a R/Python environment
+
+Just like entering any other command
+
+- Starting a commandline environment of R
+
+  ```R``` 
+
+- Starting a commandline environment of Python
+  
+  ```python```
+
+<aside class="notes">
+  These are called commandline environment where you type R/Python statement and the environment will run each statement after you hit the enter key.
+</aside>
+            </script>
+          </section>
+          <section data-markdown>
+            <script type="text/javascript" charset="utf-8">
+            
+## Copy/Move between machines
+
+- Linux/MacOS
+
+  In your terminal with command 
+
+  + ```scp local/file <username>@<host>:path/to/target``` 
+
+  + ```scp <username>@<host>:path/to/source local/file ``` 
+
+- Windows
+  
+  + [WinSCP](https://winscp.net/eng/index.php)
+  
+  + ```scp``` in Cygwin/PuTTY Toolkit
+
+<aside class="notes">
+  
+</aside>
+            </script>
+          </section>
+          <section data-markdown>
+            <script type="text/javascript" charset="utf-8">
+            
+## Running a R/Python script
+
+
+
+- For R scripts
+
+  ```R yourscript.R``` 
+
+- For Python scripts
+  
+  ```python your_python_script.py```
+
+<aside class="notes">
+  Hopefully you do not need to start your program like this.
+  But it will save you a lot of time if you need to run your script on several servers, as you may just copy paste the commandline to different ssh sessions.
+  There are even more powerful tools for work with multi-server program, called ansible, and it can distribute your command to sever servers.
+</aside>
+            </script>
+          </section>
+        </section>
+        <section>
+          
+          <section data-markdown>
+            <script type="text/template" charset="utf-8">
+            
+## Another bit more
+
+Tools for better experience with terminals
+
+-  cmder - [cmdr.net](http://cmder.net)
+-  ConEmu - [conemu.github.io](https://conemu.github.io)
+
+<aside class="notes">
+  These two pieces of software do not provide anything for connection to a server, but they do making using the commandline easier.
+  If you have Cygwin installed, you may config cmder/ConEmu to work together with it and cmder/ConEmu will provide you with a set nice things like multi-tabs, searching, hotkeys for copy/paste, etc.
+</aside>
+            </script>
+          </section>
+          <section data-markdown>
+            <script type="text/javascript" charset="utf-8">
+            
+## Passwordless Login
+
+Passwordless doesn't mean insecure
+
+- Generating a key-pair for your identity 
+
+  ```ssh-keygen -c <your email address>```
+
+  There will be several questions you need to answer.
+  You may just press enter for each question.
+
+- Copy the identity to the host.
+
+  ```ssh-copy-id [<username>@]<host>```
+  
+<aside class="notes">
+  The command <code>ssh-keygen</code> will generate a key pair (private key, public key) which is used for authentication.
+  The private key is the one you need to keep secret to yourself, while the public key can be distributed to others who need to verify your identity.
+  The command <code>ssh-copy-id</code> will send the public key to the server you usually use and the server will create record of the public key in you account.
+  So the next time when you try to login to the server, the server will ask for evidence that you hold the private key matching the public key.
+</aside>
+            </script>
+          </section>
+          <section data-markdown>
+            <script type="text/javascript" charset="utf-8">
+            
+## Passwordless Login
+
+- On Windows with PuTTY is hard
+
+  - Check [Here](https://www.howtoforge.com/ssh_key_based_logins_putty), or
+  - Use another client [Bitvise SSH Client](https://www.bitvise.com/ssh-client)
+
+<aside class="notes">
+  These are security tools, make sure your choice is reliable.
+</aside>
+            </script>
+          </section>
+        </section>
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				history: true,
+
+				// More info https://github.com/hakimel/reveal.js#dependencies
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+				]
+			});
+		</script>
+	</body>
+</html>
