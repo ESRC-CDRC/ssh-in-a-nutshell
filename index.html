@@ -62,8 +62,9 @@ By [Wen Li](https://github.com/spacelis)
 
 - Microsoft Windows Remote Desktop
 - VNC
-- Chrome Remote Desktop
-- TeamViewer
+- (Chrome Remote Desktop)
+- (TeamViewer)
+- ...
 
 
 <aside class="notes">
@@ -96,6 +97,7 @@ Why SSH?
 <aside class="notes">
   PuTTY is the most straight forward for logging into a SSH service.
   The latter one (Cygwin) is a bunch of commandline tools mimic-ing *NIX based system, with which you can do a lot things including SSH-ing to a server.
+  The using of ssh command in Cygwin is exactly the same as the one on Linux OSs.
 </aside>
 
             </script>
@@ -107,6 +109,10 @@ Why SSH?
             ## Get started!
 
             ```ssh [username@]<host>```
+
+            __or__
+
+            ![PuTTY](images/putty_login_configuration.png)
               
             </script>
           </section>
@@ -114,6 +120,13 @@ Why SSH?
             <script type="text/template" charset="utf-8">
 ## That's it.
 ### Thanks!
+              
+            </script>
+          </section>
+          <section data-markdown>
+            <script type="text/template" charset="utf-8">
+## Sorry!
+It is more than that if you really wish to use the server.
               
             </script>
           </section>
@@ -153,7 +166,7 @@ Basic format of command
 
 - List current directory
 
-  ```ls an/directory``` or simply ```ls```
+  ```ls an/directory``` or simply ```ls``` for current directory
 
 <aside class="notes">
   Please notice that there are two way of interpreting a path to a directory.
@@ -169,11 +182,11 @@ Basic format of command
             
 ## A bit more...
 
--  Copy file
+- Copy a file
 
   ```cp path/to/source path/to/target```
   
-- Move file
+- Move/Rename a file
 
   ```mv path/to/source path/to/target``` 
 
@@ -250,6 +263,40 @@ Just like entering any other command
 </aside>
             </script>
           </section>
+          <section data-markdown>
+            <script type="text/javascript" charset="utf-8">
+            
+## Long Running Command/Process/Scripts
+
+
+
+- **tmux/screen**
+
+  A tool to create a session that you can detach from and re-attach
+
+- _cmd_ &/disown/ctrl-z/bg/fg/kill %1
+  
+  Simply using background processes and job management command
+
+<aside class="notes">
+  The first one is more elegent to manage, while the latter one sometimes is more handy.
+  With tmux/screen you can open up a session and create/use multiple shell instances.
+  You can detach with &lt;Ctrl-b&gt; then &lt;d&gt; (tmux) or &lt;Ctrl-a&gt; then &lt;d&gt;.
+  Now you are safe to log out while your processes keep running on the server.
+  Later, say the next day, you can log back in to the server and re-attach to the session via &lt;tmux a&gt; or &lt;screen -r&gt;.
+  Tadaaa, your work session comes back just like what you have left.
+
+  The other set of commands can also be useful if you start a process/script and suddenly realize that you need to log off.
+  Then you need to use &lt;Ctrl-z&gt; to suspend the current running process and you will find the prompt of shell comes back.
+  Now you can use command "bg" to put that process to the background.
+  You can check the process by using "top" command and see whether it uses any CPU time.
+  Then you need to "disown" the process so that it will keep running after you log out the server.
+  Next time when you log back in to the server, you can check whether the process has finished/stopped using "top".
+  But you will lose the output to the screen as they are gone when you issue the command "disown".
+  So it is better to use tmux/screen for holding the screen output from your process.
+</aside>
+            </script>
+          </section>
         </section>
         <section>
           
@@ -310,6 +357,55 @@ Passwordless doesn't mean insecure
 </aside>
             </script>
           </section>
+          <section data-markdown>
+            <script type="text/javascript" charset="utf-8">
+            
+## Port Forwarding
+
+- SSH Option '-L'
+
+  ```ssh ... -L<localport>:<host>:<port>```
+
+  where ```...``` is something like 
+  
+  ```wenli@round.geog.ucl.ac.uk```
+
+<aside class="notes">
+  With port forwarding you can build an tunnel for accessing your machine through the firewall.
+  For example if you have a windows machine allowing Remote Desktop, you can do "ssh username@host -L3388:yourmachineip:3389".
+  Then you may just connect to your local 3388 port for accessing the remote machine in the office.
+  There are four servers available for that, namely, round/square/arch/triangle.geog.ucl.ac.uk.
+
+</aside>
+            </script>
+          </section>
+          <section data-markdown>
+            <script type="text/javascript" charset="utf-8">
+            
+## Port Forwarding (PuTTY)
+
+
+![Port Forwarding in PuTTY](images/putty_port_forwarding.png)
+
+<aside class="notes">
+  With port forwarding you can build an tunnel for accessing your machine through the firewall.
+  For example if you have a windows machine allowing Remote Desktop, you can do "ssh username@host -L3388:yourmachineip:3389".
+  Then you may just connect to your local 3388 port for accessing the remote machine in the office.
+  There are four servers available for that, namely, round/square/arch/triangle.geog.ucl.ac.uk.
+
+</aside>
+            </script>
+          </section>
+        </section>
+        <section data-markdown>
+          <script type="text/javascript" charset="utf-8">
+            
+## This is the real END
+# Thank you!
+
+```me@universe$ Questions?```
+
+          </script>
         </section>
 			</div>
 		</div>
